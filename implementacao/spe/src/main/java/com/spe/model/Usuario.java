@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Entity
@@ -31,13 +33,14 @@ public class Usuario implements Serializable{
 	private String senha;
 	private String cpf;
 	
-	
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "usuario_perfil", 
 			joinColumns = @JoinColumn(name = "fk_usuario", referencedColumnName = "id"), 
 			inverseJoinColumns = @JoinColumn(name="fk_perfil", referencedColumnName = "id"))
 	private List<Perfil> perfis;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "usuario", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<FolhaPonto> listPontos;
 
