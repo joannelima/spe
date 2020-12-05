@@ -25,14 +25,29 @@ create table usuario_perfil(
 	foreign key (fk_perfil) references perfil(id)
 );
 
+create table folha_ponto(
+	id serial primary key, 
+	dia date, 
+	saldo time,
+	horas_extras time, 
+	debito time,
+	fk_usuario integer, 
+	
+	foreign key (fk_usuario) references usuario(id)
+
+);
+
 -- criando tabela de registro
 create table registro_ponto 
 (
 	id serial primary key, 
-	fk_usuario integer, 
+	fk_folha_ponto integer, 
 	data_marcacao timestamp, 
 	tipo_marcacao integer, 
-	tipo_dia_semana varchar
+	tipo_dia_semana varchar, 
+	
+	foreign key (fk_folha_ponto) references folha_ponto(id)
+	
 );
 --------------------------------------------- INSERTS
 --inserindo perfis
