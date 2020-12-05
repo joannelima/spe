@@ -26,7 +26,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .contact(new Contact("Joanne Lima", "github.com/joannelima", "joannealima@gmail.com"))
+                .contact(new Contact("Joanne Lima", "https://github.com/joannelima/spe", "joannealima@gmail.com"))
                 .title("SPE")
                 .description("Documentação do Sistema de Ponto Eletrônico")
                 .licenseUrl("https://apache.org")
