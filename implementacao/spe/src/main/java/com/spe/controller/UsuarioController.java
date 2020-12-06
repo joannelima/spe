@@ -16,7 +16,7 @@ import com.spe.service.UsuarioService;
 public class UsuarioController {
 	
 	@Autowired
-	UsuarioService usuarioService;
+	private UsuarioService usuarioService;
 
 	@PostMapping("/novo")
 	public ResponseEntity<UsuarioDto> salvar(@RequestBody Usuario usuario){

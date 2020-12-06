@@ -1,7 +1,7 @@
 package com.spe.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -27,24 +29,38 @@ public class FolhaPonto implements Serializable{
 	private Integer id;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy",locale = "pt-BR", timezone = "Brazil/East")
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy") 
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dia;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="HH:mm",locale = "pt-BR", timezone = "Brazil/East")
 	@DateTimeFormat(pattern = "HH:mm")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date horasExtras;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="HH:mm",locale = "pt-BR", timezone = "Brazil/East")
 	@DateTimeFormat(pattern = "HH:mm")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date horasDebito;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="HH:mm",locale = "pt-BR", timezone = "Brazil/East")
 	@DateTimeFormat(pattern = "HH:mm")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date saldo;
 	
 	@ManyToOne
 	@JoinColumn(name="fk_usuario")
 	private Usuario usuario;
+
+	public FolhaPonto(Date date, Usuario usuario) {
+		super();
+		this.dia = date;
+		this.usuario = usuario;
+	}
+
+	public FolhaPonto() {}
+	
+	
 	
 
 }

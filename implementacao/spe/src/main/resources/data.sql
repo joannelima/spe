@@ -4,7 +4,7 @@ values ('ADMIN'), ('USUARIO');
 
 -- inserindo usuario
 insert into usuario (nome, sobrenome, cpf, email)
-values ('TOQUIO', 'OLIVEIRA', '11111111111', 'toquio@gmail.com'), 
+values ('TOQUIO', 'OLIVEIRA', '111.111.111-11', 'toquio@gmail.com'), 
 ('BERLIM', 'SILVA', '02145841212', 'berlim@gmail.com');
 
 -- inserindo relacionamento usuario e perfil
