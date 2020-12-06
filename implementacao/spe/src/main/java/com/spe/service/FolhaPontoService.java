@@ -1,6 +1,7 @@
 package com.spe.service;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,13 @@ public class FolhaPontoService {
 	  @Autowired
 	  private FolhaPontoRepository folhaPontoRepository;
 	  
-	  public FolhaPonto retornarFolhaPontoDoUsuarioPorDia(Usuario usuario, Date dia) {
-		  return folhaPontoRepository.findByUsuarioAndDia(usuario, dia);
+	  public Optional<FolhaPonto> retornarFolhaPontoDoUsuarioPorDia(Usuario usuario, Date dia) {
+		  return folhaPontoRepository.folhaPontoPorDia(usuario, dia);
 	  }
 	  
-	  public void iniciarFolhaPonto(Usuario usuario) {
+	  public Optional<FolhaPonto> iniciarFolhaPonto(Usuario usuario) {
 		  AcaoFolhaPonto<Usuario, FolhaPontoRepository> salvar = new IniciarFolhaPonto();
-		  salvar.acao(usuario, folhaPontoRepository);
+		  return Optional.of(salvar.acao(usuario, folhaPontoRepository));
 	  }
 	  
 	  public void finalizarFolhaPonto(FolhaPonto folhaPonto) {

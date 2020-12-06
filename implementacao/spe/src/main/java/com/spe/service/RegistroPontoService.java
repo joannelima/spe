@@ -1,6 +1,8 @@
 package com.spe.service;
 
+import java.text.ParseException;
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,17 +22,22 @@ public class RegistroPontoService {
 	@Autowired
 	private FolhaPontoService folhaPontoService;
 	
+	@Autowired
+	private DataService dataService;
 	
-	public void monitoramentoPontoDiasNormais(Usuario usuario){
+	
+	public void monitoramentoPontoDiasNormais(Usuario usuario) throws ParseException{
 		Date dia = new Date();
-		FolhaPonto folha = folhaPontoService.retornarFolhaPontoDoUsuarioPorDia(usuario, dia);
-		if(folha != null) {
-			salvarPonto(dia, folha);
-			if(retornaQuantidadePontos(folha) == 4) {
-				folhaPontoService.finalizarFolhaPonto(folha);
+		Date dataFormatada = dataService.formatarData(dia);
+		Optional<FolhaPonto> folha = folhaPontoService.retornarFolhaPontoDoUsuarioPorDia(usuario, dataFormatada);
+		if(folha.isPresent()) {
+			salvarPonto(dia, folha.get());
+			if(retornaQuantidadePontos(folha.get()) == 4) {
+				folhaPontoService.finalizarFolhaPonto(folha.get());
 			}
 		}else {
-			folhaPontoService.iniciarFolhaPonto(usuario);
+			Optional<FolhaPonto> novaFolha = folhaPontoService.iniciarFolhaPonto(usuario);
+			salvarPonto(dia, novaFolha.get());
 		}
 	}
 

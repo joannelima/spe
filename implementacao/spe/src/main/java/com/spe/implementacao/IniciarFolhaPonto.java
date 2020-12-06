@@ -10,9 +10,10 @@ import com.spe.repository.FolhaPontoRepository;
 public class IniciarFolhaPonto implements AcaoFolhaPonto<Usuario, FolhaPontoRepository>{
 
 	@Override
-	public void acao(Usuario usuario, FolhaPontoRepository folhaPontoRepository) {
+	public FolhaPonto acao(Usuario usuario, FolhaPontoRepository folhaPontoRepository) {
 		FolhaPonto folhaPonto = new FolhaPonto(new Date(), usuario);
 		folhaPontoRepository.saveAndFlush(folhaPonto);
+		return folhaPonto;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.spe.controller;
 
+import java.text.ParseException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class RegistroPontoController {
 	
 
 	@PostMapping("/ponto")
-	public ResponseEntity<Usuario> baterPonto(@RequestBody PontoDto ponto){
+	public ResponseEntity<Usuario> baterPonto(@RequestBody PontoDto ponto) throws ParseException{
 		Optional<Usuario> usuario = usuarioService.buscarUsuarioPorCPF(ponto.getCpf());
 		if(usuario.isPresent()) {
 			registroPontoService.monitoramentoPontoDiasNormais(usuario.get());

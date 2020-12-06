@@ -7,8 +7,9 @@ import com.spe.repository.FolhaPontoRepository;
 public class FinalizarFolhaPonto implements AcaoFolhaPonto<FolhaPonto, FolhaPontoRepository>{
 
 	@Override
-	public void acao(FolhaPonto folhaPonto, FolhaPontoRepository folhaPontoRepository) {
-		folhaPontoRepository.saveAndFlush(folhaPonto);
+	public FolhaPonto acao(FolhaPonto folhaPonto, FolhaPontoRepository folhaPontoRepository) {
+		 folhaPontoRepository.saveAndFlush(folhaPonto);
+		 return folhaPonto;
 	}
 
 }
