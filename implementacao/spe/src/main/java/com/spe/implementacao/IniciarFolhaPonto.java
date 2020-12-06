@@ -7,7 +7,7 @@ import com.spe.model.FolhaPonto;
 import com.spe.model.Usuario;
 import com.spe.repository.FolhaPontoRepository;
 
-public class IniciarFolhaPonto implements AcaoFolhaPonto<Usuario, FolhaPontoRepository>{
+public class IniciarFolhaPonto implements AcaoFolhaPonto{
 
 	@Override
 	public FolhaPonto acao(Usuario usuario, FolhaPontoRepository folhaPontoRepository) {

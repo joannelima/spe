@@ -1,25 +1,23 @@
 package com.spe.enumeration;
 
-
+import com.spe.implementacao.SalvarPontoNormal;
+import com.spe.implementacao.SalvarPontoSabado;
+import com.spe.interfaces.SalvarPonto;
 
 public enum TipoMarcacaoSemana {
-	Normal("Normal"),
-	FDS("Fim de semana");
+	Normal {
+		@Override
+		public SalvarPonto obter() {
+			return new SalvarPontoNormal();
+		}
+	},
+	FimDeSemana {
+		@Override
+		public SalvarPonto obter() {
+			return new SalvarPontoSabado();
+		}
+	};
 	
-	private String descricao;
-
-	private TipoMarcacaoSemana(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-	
-	
+	public abstract SalvarPonto obter();
 	
 }

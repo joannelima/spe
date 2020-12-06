@@ -1,33 +1,26 @@
 package com.spe.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
+import com.spe.enumeration.TipoMarcacaoSemana;
+
 @Service
 public class DataService {
 
-	public int diaDaSemana(Date data) { 
+	public TipoMarcacaoSemana retornaEnumDiaDaSemana(Date data) { 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(data);  
-		int day = cal.get(Calendar.DAY_OF_WEEK);
-		return day;
+		int dia = cal.get(Calendar.DAY_OF_WEEK);
+		
+		if(dia == 1 || dia == 7) {
+			return TipoMarcacaoSemana.FimDeSemana;
+		}else {
+			return TipoMarcacaoSemana.Normal;
+		}
 	}
 	
-	 public Date formatarData(Date dataMesAno) throws ParseException {
-			
-		SimpleDateFormat data = new SimpleDateFormat("yyyy/MM/dd");
-		Calendar cData = Calendar.getInstance();
-		cData.setTime(dataMesAno);
-		String dataString = data.format(dataMesAno); 
-		SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
-		Date dataFormatada = formato.parse(dataString);
-		return dataFormatada;
-			
-	}
-
 	
 }

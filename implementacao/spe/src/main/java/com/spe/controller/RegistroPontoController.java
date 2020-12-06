@@ -30,7 +30,7 @@ public class RegistroPontoController {
 	public ResponseEntity<Usuario> baterPonto(@RequestBody PontoDto ponto) throws ParseException{
 		Optional<Usuario> usuario = usuarioService.buscarUsuarioPorCPF(ponto.getCpf());
 		if(usuario.isPresent()) {
-			registroPontoService.monitoramentoPontoDiasNormais(usuario.get());
+			registroPontoService.baterPonto(usuario.get());
 			return ResponseEntity.ok(usuario.get());
 		}else {
 			return ResponseEntity.notFound().build();

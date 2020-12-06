@@ -1,7 +1,9 @@
 package com.spe.interfaces;
 
 import com.spe.model.FolhaPonto;
+import com.spe.model.Usuario;
+import com.spe.repository.FolhaPontoRepository;
 
-public interface AcaoFolhaPonto<T, R> {
-	public FolhaPonto acao(T entidade, R repositorio);
+public interface AcaoFolhaPonto {
+	public FolhaPonto acao(Usuario usuario, FolhaPontoRepository repository);
 }

@@ -20,16 +20,22 @@ public class FolhaPontoService {
 	  private FolhaPontoRepository folhaPontoRepository;
 	  
 	  public Optional<FolhaPonto> retornarFolhaPontoDoUsuarioPorDia(Usuario usuario, Date dia) {
-		  return folhaPontoRepository.folhaPontoPorDia(usuario, dia);
+		  return folhaPontoRepository.findByUsuarioAndDia(usuario, dia);
 	  }
 	  
 	  public Optional<FolhaPonto> iniciarFolhaPonto(Usuario usuario) {
-		  AcaoFolhaPonto<Usuario, FolhaPontoRepository> salvar = new IniciarFolhaPonto();
+		  AcaoFolhaPonto salvar = new IniciarFolhaPonto();
 		  return Optional.of(salvar.acao(usuario, folhaPontoRepository));
 	  }
 	  
-	  public void finalizarFolhaPonto(FolhaPonto folhaPonto) {
-		  AcaoFolhaPonto<FolhaPonto, FolhaPontoRepository> salvar = new FinalizarFolhaPonto();
-		  salvar.acao(folhaPonto, folhaPontoRepository);
+	  public void finalizarFolhaPonto(Usuario usuario) {
+		  AcaoFolhaPonto salvar = new FinalizarFolhaPonto();
+		  salvar.acao(usuario, folhaPontoRepository);
 	  }
+	  
+	  public FolhaPonto salvarFolhaPonto(FolhaPonto folha) {
+		  return folhaPontoRepository.saveAndFlush(folha);
+	  }
+	  
+
 }
