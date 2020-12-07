@@ -18,7 +18,7 @@ public class SalvarPontoSabado implements SalvarPonto {
 	@Override
 	public void salvar(FolhaPonto folhaPonto, Date dia, RegistroPontoService pontoService, FolhaPontoService folhaService, FolhaPontoRepository folhaRepository) throws ParseException {
 			Long qtdPontos = pontoService.retornaQuantidadePontos(folhaPonto);
-			FolhaDto folhaDto = folhaService.constroiDto(folhaPonto, dia);
+			FolhaDto folhaDto = folhaService.controiDtoSabado(folhaPonto, dia);
 			HashMap<Long, AcaoFolhaPonto<FolhaDto, FolhaPontoRepository>> acao = new HashMap<>();
 			acao.put(2L, new FinalizarFolhaPonto());
 			if(acao.containsKey(qtdPontos)) {

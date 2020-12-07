@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spe.dto.FolhaDto;
+import com.spe.implementacao.CalculaHoraNormal;
+import com.spe.implementacao.CalculaHoraSabado;
 import com.spe.implementacao.IniciarFolhaPonto;
 import com.spe.interfaces.AcaoFolhaPonto;
+import com.spe.interfaces.CalculaHora;
 import com.spe.model.FolhaPonto;
 import com.spe.model.Usuario;
 import com.spe.repository.FolhaPontoRepository;
@@ -33,8 +36,14 @@ public class FolhaPontoService {
 	  }
 	  
 	  
-	  public FolhaDto constroiDto(FolhaPonto folhaPonto, Date dia) throws ParseException {
-			return dataService.calculoHorasNormal(folhaPonto, dia);
+	  public FolhaDto controiDtoSabado(FolhaPonto folhaPonto, Date dia) throws ParseException {
+			CalculaHora sabado = new CalculaHoraSabado();
+			return sabado.calcular(folhaPonto, dataService);
+	  }
+	  
+	  public FolhaDto constroiDtoNormal(FolhaPonto folhaPonto, Date dia) throws ParseException {
+			CalculaHora normal = new CalculaHoraNormal();
+			return normal.calcular(folhaPonto, dataService);
 	  }
 	  
 

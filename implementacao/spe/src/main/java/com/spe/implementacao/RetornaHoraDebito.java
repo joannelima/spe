@@ -4,9 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.spe.interfaces.CalcularHora;
+import com.spe.interfaces.RetornaHora;
 
-public class CalculaHoraDebito implements CalcularHora{
+public class RetornaHoraDebito implements RetornaHora{
 	
 	public Date calcular(Integer horaRestante, Integer minutoRestante, Date horaExtra, Integer horaPorDia) throws ParseException {
 	
