@@ -20,10 +20,12 @@ import com.spe.model.RegistroPonto;
 public class DataService {
 
 	public TipoMarcacaoSemana retornaEnumDiaDaSemana(Date data) { 
+		Integer sabado = 7;
+		Integer domingo = 1;
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(data);  
 		int dia = cal.get(Calendar.DAY_OF_WEEK);
-		if(dia == 1 || dia == 7) {
+		if(dia == domingo || dia == sabado) {
 			return TipoMarcacaoSemana.FimDeSemana;
 		}else {
 			return TipoMarcacaoSemana.Normal;
