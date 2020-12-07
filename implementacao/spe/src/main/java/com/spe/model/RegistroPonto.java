@@ -33,7 +33,7 @@ public class RegistroPonto implements Serializable{
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="HH:mm",locale = "pt-BR", timezone = "Brazil/East")
 	@DateTimeFormat(pattern = "HH:mm")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIME)
 	private Date horasMarcacao;
 	
 	@ManyToOne

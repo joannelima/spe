@@ -1,20 +1,21 @@
 package com.spe.implementacao;
 
-import java.util.Date;
-
+import com.spe.dto.FolhaDto;
 import com.spe.interfaces.AcaoFolhaPonto;
 import com.spe.model.FolhaPonto;
-import com.spe.model.Usuario;
 import com.spe.repository.FolhaPontoRepository;
 
-public class FinalizarFolhaPonto implements AcaoFolhaPonto{
-
+public class FinalizarFolhaPonto implements AcaoFolhaPonto<FolhaDto, FolhaPontoRepository>{
+	
 	@Override
-	public FolhaPonto acao(Usuario usuario, FolhaPontoRepository folhaPontoRepository) {
-		FolhaPonto folhaPonto = new FolhaPonto(new Date(), usuario);
-		folhaPontoRepository.saveAndFlush(folhaPonto);
-		return folhaPonto;
-		 
+	public FolhaPonto acao(FolhaDto folhaDto, FolhaPontoRepository folhaPontoRepository) {
+		FolhaPonto folha = folhaDto.getFolha();
+		folha.setHorasDebito(folhaDto.getHoraDebitos());
+		folha.setHorasExtras(folhaDto.getHoraExtras());
+		folha.setSaldo(folhaDto.getSaldo());
+		return folhaPontoRepository.saveAndFlush(folha);
 	}
+
+
 
 }

@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spe.enumeration.TipoMarcacaoSemana;
-import com.spe.implementacao.IniciarFolhaPonto;
-import com.spe.interfaces.AcaoFolhaPonto;
 import com.spe.interfaces.SalvarPonto;
 import com.spe.model.FolhaPonto;
 import com.spe.model.RegistroPonto;
@@ -47,10 +45,10 @@ public class RegistroPontoService {
 		}
 	}
 
-	private void salvarPorDiaDaSemana(Date dia, Optional<FolhaPonto> folha) {
+	private void salvarPorDiaDaSemana(Date dia, Optional<FolhaPonto> folha) throws ParseException {
 		TipoMarcacaoSemana diaDaSemana = dataService.retornaEnumDiaDaSemana(dia);
 		SalvarPonto salvarPonto = diaDaSemana.obter();
-		salvarPonto.salvar(folha.get(), dia, registroPontoService, folhaPontoRepository);
+		salvarPonto.salvar(folha.get(), dia, registroPontoService, folhaPontoService, folhaPontoRepository);
 	}
 	
 	public void salvarRegistroPonto(Date dia, FolhaPonto folha, TipoMarcacaoSemana tpm) {
@@ -62,6 +60,4 @@ public class RegistroPontoService {
 		return registroPontoRepository.countByFolhaPonto(folha);
     }
 
-
-	
 }
