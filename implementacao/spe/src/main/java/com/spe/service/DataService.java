@@ -28,34 +28,64 @@ public class DataService {
 	}
 	
 	
-	public FolhaDto calculoHorasSabado(FolhaPonto folha, Date dia) throws ParseException {
+	public FolhaDto calculoHorasNormal(FolhaPonto folha, Date dia) throws ParseException {
 		List<RegistroPonto> listaPontosList = folha.getPontos();
-		Date dataInicial = listaPontosList.get(0).getHorasMarcacao();
-		Date dataFinal = listaPontosList.get(1).getHorasMarcacao();
-		Date resultado = calculaIntervaloDeDatas(dataInicial, dataFinal);
+		Date entrada = listaPontosList.get(0).getHorasMarcacao();
+		Date saidaAlmoco = listaPontosList.get(1).getHorasMarcacao();
+		Date entradaAlmoco = listaPontosList.get(2).getHorasMarcacao();
+		Date saida = listaPontosList.get(3).getHorasMarcacao();
+		Date resultadoPrimeiroIntevalo = calculaIntervaloDeDatas(entrada, saidaAlmoco);
+		Date resultadoSegundoIntervalo = calculaIntervaloDeDatas(entradaAlmoco, saida);
 		Date horaExtra = new Date();
 		Date horaDebito = new Date();
 		Date saldo = new Date();
 		
 		Calendar c = Calendar.getInstance();
-		c.setTime(resultado);
+		c.setTime(resultadoPrimeiroIntevalo);
+		int horaEntrada = c.get(Calendar.HOUR_OF_DAY);
+		calculaHorasRestantes(c, horaEntrada);
 		
-		int hora = c.get(Calendar.HOUR_OF_DAY);
-		c.add(hora, -4);
-		resultado = c.getTime();
 		
-		if(hora > 4) {
-			horaExtra = resultado;
+		
+		Date resultadoSomaHoras = somaDatas(resultadoPrimeiroIntevalo, resultadoSegundoIntervalo);
+		
+		Calendar d = Calendar.getInstance();
+		d.setTime(resultadoSomaHoras);
+		int horaRestante = d.get(Calendar.HOUR_OF_DAY);
+		int minutoRestante = d.get(Calendar.MINUTE);
+		
+		
+		if(horaRestante > 8) {
+			int diferenca = horaRestante - 8;
+			SimpleDateFormat format = new SimpleDateFormat("H:m"); 
+			String resultado = diferenca + ":" + minutoRestante;
+			horaExtra = format.parse(resultado);
 			horaDebito = null;
-			saldo = resultado;
-		}else if(hora < 4){
-			horaDebito = resultado;
+			saldo = horaExtra;
+		}else if(horaRestante < 8){
+			int diferenca = 8 - horaRestante;
+			SimpleDateFormat format = new SimpleDateFormat("H:m"); 
+			String resultado = diferenca + ":" + minutoRestante;
 			horaExtra = null;
-			saldo = resultado;
+			horaDebito = format.parse(resultado);
+			saldo = horaDebito;
+		}else {
+			SimpleDateFormat format = new SimpleDateFormat("H:m"); 
+			String resultado = horaRestante + ":" + minutoRestante;
+			horaDebito = null;
+			horaExtra = null;
+			saldo = format.parse(resultado);
 		}
 		
 		 FolhaDto updateFolha = new FolhaDto(folha, horaExtra, horaDebito, saldo);
 		 return updateFolha;
+	}
+
+
+	private void calculaHorasRestantes(Calendar c, int horaSaida) {
+		Date resultadoSegundoIntervalo = new Date();
+		c.add(horaSaida, -4);
+		resultadoSegundoIntervalo = c.getTime();
 	}
 
 
@@ -70,6 +100,17 @@ public class DataService {
 		return total;
 	}
 	
+	
+	private Date somaDatas(Date entrada, Date saida) throws ParseException {
+		Date total;
+		SimpleDateFormat format = new SimpleDateFormat("H:m");
+        long diff = saida.getTime() + entrada.getTime();
+        long diffMinutes = diff / (60 * 1000) % 60;
+        long diffHours = diff / (60 * 60 * 1000) % 24;
+        String resultado = diffHours + ":" + diffMinutes;
+        total = format.parse(resultado);
+		return total;
+	}
 	
 	
 }

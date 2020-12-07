@@ -34,7 +34,7 @@ public class FolhaPontoService {
 	  
 	  
 	  public FolhaDto constroiDto(FolhaPonto folhaPonto, Date dia) throws ParseException {
-			return dataService.calculoHorasSabado(folhaPonto, dia);
+			return dataService.calculoHorasNormal(folhaPonto, dia);
 	  }
 	  
 
