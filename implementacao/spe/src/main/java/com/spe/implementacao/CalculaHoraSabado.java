@@ -29,14 +29,8 @@ public class CalculaHoraSabado implements CalculaHora{
 		int horaRestante = d.get(Calendar.HOUR_OF_DAY);
 		int minutoRestante = d.get(Calendar.MINUTE);
 		
-		
-		if(horaRestante > horasPorDia) {
-			horaExtra = dataService.calculoHoraExtra(horasPorDia, horaExtra, horaRestante, minutoRestante);
-		}else if(horaRestante < horasPorDia){
-			horaDebito = dataService.calculoHoraDebito(horasPorDia, horaExtra, horaRestante, minutoRestante);
-		}
-		
-		 return dataService.controiDtoHoras(folha, horaExtra, horaDebito, saldo);
+		dataService.retornaExtraOuDebito(horasPorDia, horaRestante, minutoRestante);
+     	return dataService.controiDtoHoras(folha, horaExtra, horaDebito, saldo);
 
 	}
 }

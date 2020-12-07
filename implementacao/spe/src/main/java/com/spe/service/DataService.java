@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import com.spe.implementacao.RetornaHoraDebito;
 import com.spe.implementacao.RetornaHoraExtra;
 import com.spe.interfaces.RetornaHora;
 import com.spe.model.FolhaPonto;
-import com.spe.model.RegistroPonto;
 
 @Service
 public class DataService {
@@ -38,19 +36,18 @@ public class DataService {
 	}
 
 
-	public Date calculoHoraDebito(Integer horasPorDia, Date horaExtra, int horaRestante, int minutoRestante)
+	public Date calculoHoraDebito(Integer horasPorDia, int horaRestante, int minutoRestante)
 			throws ParseException {
-		Date horaDebito;
-		RetornaHora calculoHoraExtra = new RetornaHoraDebito();
-		horaDebito = calculoHoraExtra.calcular(horaRestante, minutoRestante, horaExtra, horasPorDia);
+		RetornaHora calculoHoraDebito = new RetornaHoraDebito();
+		Date horaDebito = calculoHoraDebito.calcular(horaRestante, minutoRestante, horasPorDia);
 		return horaDebito;
 	}
 
 
-	public Date calculoHoraExtra(Integer horasPorDia, Date horaExtra, int horaRestante, int minutoRestante)
+	public Date calculoHoraExtra(Integer horasPorDia, int horaRestante, int minutoRestante)
 			throws ParseException {
 		RetornaHora calculoHoraExtra = new RetornaHoraExtra();
-		horaExtra = calculoHoraExtra.calcular(horaRestante, minutoRestante, horaExtra, horasPorDia);
+		Date horaExtra = calculoHoraExtra.calcular(horaRestante, minutoRestante, horasPorDia);
 		return horaExtra;
 	}
 
@@ -84,7 +81,18 @@ public class DataService {
         total = format.parse(resultado);
 		return total;
 	}
-	
+
+	public Date retornaExtraOuDebito (Integer horasPorDia, Integer horaRestante, Integer minutoRestante) throws ParseException{
+		if(horaRestante > horasPorDia) {
+			Date horaExtra = calculoHoraExtra(horasPorDia, horaRestante, minutoRestante);
+			return horaExtra;
+		}else if(horaRestante < horasPorDia){
+			Date horaDebito = calculoHoraDebito(horasPorDia, horaRestante, minutoRestante);
+			return horaDebito;
+		}
+		
+		return null;
+	}
 
 	
 }

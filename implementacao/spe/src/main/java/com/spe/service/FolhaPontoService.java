@@ -35,7 +35,6 @@ public class FolhaPontoService {
 		  return Optional.of(salvar.acao(usuario, folhaPontoRepository));
 	  }
 	  
-	  
 	  public FolhaDto controiDtoSabado(FolhaPonto folhaPonto, Date dia) throws ParseException {
 			CalculaHora sabado = new CalculaHoraSabado();
 			return sabado.calcular(folhaPonto, dataService);

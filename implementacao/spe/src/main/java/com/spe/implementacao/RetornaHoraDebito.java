@@ -8,12 +8,14 @@ import com.spe.interfaces.RetornaHora;
 
 public class RetornaHoraDebito implements RetornaHora{
 	
-	public Date calcular(Integer horaRestante, Integer minutoRestante, Date horaExtra, Integer horaPorDia) throws ParseException {
+	public Date calcular(Integer horaRestante, Integer minutoRestante, Integer horaPorDia) throws ParseException {
 	
 		int diferenca = horaPorDia - horaRestante;
 		SimpleDateFormat format = new SimpleDateFormat("H:m"); 
 		String resultado = diferenca + ":" + minutoRestante;
-		return horaExtra = format.parse(resultado);
+		Date horaDebito = format.parse(resultado);
+		return horaDebito; 
+				
 
 	}
 }
