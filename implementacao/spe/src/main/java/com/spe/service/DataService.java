@@ -62,7 +62,12 @@ public class DataService {
 			horaDebito = calculoHoraDebito(horasPorDia, horaExtra, horaRestante, minutoRestante);
 		}
 		
-		 FolhaDto updateFolha = new FolhaDto(folha, horaExtra, horaDebito, saldo);
+		 return controiDtoHoras(folha, horaExtra, horaDebito, saldo);
+	}
+
+
+	private FolhaDto controiDtoHoras(FolhaPonto folha, Date horaExtra, Date horaDebito, Date saldo) {
+		FolhaDto updateFolha = new FolhaDto(folha, horaExtra, horaDebito, saldo);
 		 return updateFolha;
 	}
 
