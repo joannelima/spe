@@ -1,9 +1,10 @@
 package com.spe.service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
@@ -17,17 +18,17 @@ import com.spe.model.FolhaPonto;
 @Service
 public class DataService {
 
-	public TipoMarcacaoSemana retornaEnumDiaDaSemana(Date data) { 
-		Integer sabado = 7;
-		Integer domingo = 1;
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(data);  
-		int dia = cal.get(Calendar.DAY_OF_WEEK);
-		if(dia == domingo || dia == sabado) {
+	public TipoMarcacaoSemana retornaEnumDiaDaSemana(LocalDateTime data) { 
+		DayOfWeek diaDaSemana = data.getDayOfWeek();
+		HashMap<DayOfWeek, TipoMarcacaoSemana> retorno = new HashMap<>();
+		retorno.get(DayOfWeek.SATURDAY);
+		retorno.get(DayOfWeek.SUNDAY);
+		
+		if(retorno.containsKey(diaDaSemana)) {
 			return TipoMarcacaoSemana.FimDeSemana;
-		}else {
-			return TipoMarcacaoSemana.Normal;
 		}
+			
+		return TipoMarcacaoSemana.Normal;
 	}
 
 	public FolhaDto controiDtoHoras(FolhaPonto folha, Date horaExtra, Date horaDebito, Date saldo) {
@@ -51,36 +52,6 @@ public class DataService {
 		return horaExtra;
 	}
 
-
-	public void calculaHorasRestantes(Calendar c, int horaSaida) {
-		Date resultadoSegundoIntervalo = new Date();
-		c.add(horaSaida, -4);
-		resultadoSegundoIntervalo = c.getTime();
-	}
-
-
-	public Date calculaIntervaloDeDatas(Date entrada, Date saida) throws ParseException {
-		Date total;
-		SimpleDateFormat format = new SimpleDateFormat("H:m");
-        long diff = saida.getTime() - entrada.getTime();
-        long diffMinutes = diff / (60 * 1000) % 60;
-        long diffHours = diff / (60 * 60 * 1000) % 24;
-        String resultado = diffHours + ":" + diffMinutes;
-        total = format.parse(resultado);
-		return total;
-	}
-	
-	
-	public Date somaDatas(Date entrada, Date saida) throws ParseException {
-		Date total;
-		SimpleDateFormat format = new SimpleDateFormat("H:m");
-        long diff = saida.getTime() + entrada.getTime();
-        long diffMinutes = diff / (60 * 1000) % 60;
-        long diffHours = diff / (60 * 60 * 1000) % 24;
-        String resultado = diffHours + ":" + diffMinutes;
-        total = format.parse(resultado);
-		return total;
-	}
 
 	public Date retornaExtraOuDebito (Integer horasPorDia, Integer horaRestante, Integer minutoRestante) throws ParseException{
 		if(horaRestante > horasPorDia) {

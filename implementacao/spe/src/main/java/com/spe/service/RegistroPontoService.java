@@ -1,7 +1,9 @@
 package com.spe.service;
 
 import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,29 +37,34 @@ public class RegistroPontoService {
 	
 	
 	public void baterPonto(Usuario usuario) throws ParseException{
-		Date dia = new Date();
-		Optional<FolhaPonto> folha = folhaPontoService.retornarFolhaPontoDoUsuarioPorDia(usuario, dia);
+		LocalDateTime hora = LocalDateTime.now();
+		Optional<FolhaPonto> folha = folhaPontoService.retornarFolhaPontoDoUsuarioPorDia(usuario, hora);
 		if(folha.isPresent()) {
-			salvarPorDiaDaSemana(dia, folha);
+			salvarPorDiaDaSemana(hora, folha);
 		}else {
 			Optional<FolhaPonto> novaFolha = folhaPontoService.iniciarFolhaPonto(usuario);
-			salvarPorDiaDaSemana(dia, novaFolha);
+			salvarPorDiaDaSemana(hora, novaFolha);
 		}
 	}
 
-	private void salvarPorDiaDaSemana(Date dia, Optional<FolhaPonto> folha) throws ParseException {
+	private void salvarPorDiaDaSemana(LocalDateTime dia, Optional<FolhaPonto> folha) throws ParseException {
 		TipoMarcacaoSemana diaDaSemana = dataService.retornaEnumDiaDaSemana(dia);
 		SalvarPonto salvarPonto = diaDaSemana.obter();
 		salvarPonto.salvar(folha.get(), dia, registroPontoService, folhaPontoService, folhaPontoRepository);
 	}
 	
-	public void salvarRegistroPonto(Date dia, FolhaPonto folha, TipoMarcacaoSemana tpm) {
-		RegistroPonto ponto = new RegistroPonto(dia, folha, tpm); 
+	public void salvarRegistroPonto(LocalDateTime hora, FolhaPonto folha, TipoMarcacaoSemana tpm) {
+		RegistroPonto ponto = new RegistroPonto(hora, folha, tpm); 
 		registroPontoRepository.save(ponto);
 	}
 	
 	public Long retornaQuantidadePontos(FolhaPonto folha) {
 		return registroPontoRepository.countByFolhaPonto(folha);
     }
+	
+	 public Optional<List<RegistroPonto>> listaDePontos(FolhaPonto folha){
+			Optional<List<RegistroPonto>> pontos = registroPontoRepository.findByFolhaPonto(folha);
+			return pontos;
+	  }
 
 }

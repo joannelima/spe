@@ -1,7 +1,7 @@
 package com.spe.implementacao;
 
 import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import com.spe.dto.FolhaDto;
@@ -16,9 +16,10 @@ import com.spe.service.RegistroPontoService;
 public class SalvarPontoNormal implements SalvarPonto {
 
 	@Override
-	public void salvar(FolhaPonto folhaPonto, Date dia, RegistroPontoService pontoService, FolhaPontoService folhaService, FolhaPontoRepository folhaRepository) throws ParseException {
+	public void salvar(FolhaPonto folhaPonto, LocalDateTime dia, RegistroPontoService pontoService, FolhaPontoService folhaService, FolhaPontoRepository folhaRepository) throws ParseException {
 			Long qtdPontos = pontoService.retornaQuantidadePontos(folhaPonto);
-			FolhaDto folhaDto = folhaService.constroiDtoNormal(folhaPonto, dia);
+			FolhaDto folhaDto = null
+					;
 			HashMap<Long, AcaoFolhaPonto<FolhaDto, FolhaPontoRepository>> acao = new HashMap<>();
 			acao.put(4L, new FinalizarFolhaPonto());
 			if(acao.containsKey(qtdPontos)) {

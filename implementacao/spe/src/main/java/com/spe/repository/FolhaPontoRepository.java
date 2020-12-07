@@ -1,6 +1,6 @@
 package com.spe.repository;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +12,6 @@ import com.spe.model.Usuario;
 @Repository
 public interface FolhaPontoRepository extends JpaRepository<FolhaPonto, Integer>{
 
-	Optional<FolhaPonto> findByUsuarioAndDia(Usuario usuario, Date dia);
+	Optional<FolhaPonto> findByUsuarioAndDia(Usuario usuario, LocalDateTime dia);
 
 }

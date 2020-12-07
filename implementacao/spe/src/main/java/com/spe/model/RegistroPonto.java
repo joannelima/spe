@@ -1,7 +1,7 @@
 package com.spe.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -34,7 +34,7 @@ public class RegistroPonto implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="HH:mm",locale = "pt-BR", timezone = "Brazil/East")
 	@DateTimeFormat(pattern = "HH:mm")
 	@Temporal(TemporalType.TIME)
-	private Date horasMarcacao;
+	private LocalDateTime horasMarcacao;
 	
 	@ManyToOne
 	@JoinColumn(name="fk_folha_ponto")
@@ -43,14 +43,18 @@ public class RegistroPonto implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private TipoMarcacaoSemana tipoMarcacaoSemana;
 
-	public RegistroPonto(Date horasMarcacao, FolhaPonto folhaPonto, TipoMarcacaoSemana tipoMarcacaoSemana) {
+	
+
+	public RegistroPonto() {}
+
+
+
+	public RegistroPonto(LocalDateTime horasMarcacao, FolhaPonto folhaPonto, TipoMarcacaoSemana tipoMarcacaoSemana) {
 		super();
 		this.horasMarcacao = horasMarcacao;
 		this.folhaPonto = folhaPonto;
 		this.tipoMarcacaoSemana = tipoMarcacaoSemana;
 	}
-
-	public RegistroPonto() {}
 	
 	
 }
