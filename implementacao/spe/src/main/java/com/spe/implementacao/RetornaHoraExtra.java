@@ -10,7 +10,7 @@ public class RetornaHoraExtra implements RetornaHora{
 	
 	public Date calcular(Integer horaRestante, Integer minutoRestante, Date horaExtra, Integer horaPorDia) throws ParseException {
 	
-		int diferenca = horaRestante - 8;
+		int diferenca = horaRestante - horaPorDia;
 		SimpleDateFormat format = new SimpleDateFormat("H:m"); 
 		String resultado = diferenca + ":" + minutoRestante;
 		return horaExtra = format.parse(resultado);
