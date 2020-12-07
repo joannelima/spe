@@ -17,11 +17,10 @@ public class SalvarPontoSabado implements SalvarPonto {
 	@Override
 	public void salvar(FolhaPonto folhaPonto, LocalDateTime hora, RegistroPontoService pontoService, FolhaPontoService folhaService, FolhaPontoRepository folhaRepository) {
 			Long qtdPontos = pontoService.retornaQuantidadePontos(folhaPonto);
-			FolhaDto folhaDto = null;
 			HashMap<Long, AcaoFolhaPonto<FolhaDto, FolhaPontoRepository>> acao = new HashMap<>();
-			acao.put(2L, new FinalizarFolhaPonto());
+			//acao.put(2L, new FinalizarFolhaPonto());
 			if(acao.containsKey(qtdPontos)) {
-				acao.get(qtdPontos).acao(folhaDto, folhaRepository);
+//				acao.get(qtdPontos).acao(folhaDto, folhaRepository);
 			}else {
 				pontoService.salvarRegistroPonto(hora, folhaPonto, TipoMarcacaoSemana.FimDeSemana);
 			}
