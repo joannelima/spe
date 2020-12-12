@@ -28,13 +28,11 @@ public class RegistroPontoController {
 
 	@PostMapping("/ponto")
 	public ResponseEntity<Usuario> baterPonto(@RequestBody PontoDto ponto) throws ParseException{
-		Optional<Usuario> usuario = usuarioService.buscarUsuarioPorCPF(ponto.getCpf());
-		if(usuario.isPresent()) {
-			registroPontoService.baterPonto(usuario.get());
-			return ResponseEntity.ok(usuario.get());
-		}else {
-			return ResponseEntity.notFound().build();
-		}
-		
+		Optional<Usuario> usuario = usuarioService.verificaUsuario(ponto);
+		usuario.ifPresent(u -> registroPontoService.baterPonto(u));
+		return ResponseEntity.ok(usuario.get());
 	}
+
+	
+	
 }

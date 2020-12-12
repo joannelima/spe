@@ -1,6 +1,6 @@
 package com.spe.implementacao;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import com.spe.interfaces.AcaoFolhaPonto;
 import com.spe.model.FolhaPonto;
@@ -11,7 +11,7 @@ public class IniciarFolhaPonto implements AcaoFolhaPonto<Usuario, FolhaPontoRepo
 
 	@Override
 	public FolhaPonto acao(Usuario usuario, FolhaPontoRepository folhaPontoRepository) {
-		FolhaPonto folhaPonto = new FolhaPonto(new Date(), usuario);
+		FolhaPonto folhaPonto = new FolhaPonto(LocalDateTime.now(), usuario);
 		folhaPontoRepository.saveAndFlush(folhaPonto);
 		return folhaPonto;
 	}

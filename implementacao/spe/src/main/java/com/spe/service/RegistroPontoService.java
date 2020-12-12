@@ -1,8 +1,6 @@
 package com.spe.service;
 
-import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,18 +34,19 @@ public class RegistroPontoService {
 	private RegistroPontoService registroPontoService;
 	
 	
-	public void baterPonto(Usuario usuario) throws ParseException{
+	public void baterPonto(Usuario usuario) {
 		LocalDateTime hora = LocalDateTime.now();
 		Optional<FolhaPonto> folha = folhaPontoService.retornarFolhaPontoDoUsuarioPorDia(usuario, hora);
 		if(folha.isPresent()) {
 			salvarPorDiaDaSemana(hora, folha);
-		}else {
-			Optional<FolhaPonto> novaFolha = folhaPontoService.iniciarFolhaPonto(usuario);
-			salvarPorDiaDaSemana(hora, novaFolha);
 		}
+		
+		Optional<FolhaPonto> novaFolha = folhaPontoService.iniciarFolhaPonto(usuario);
+		salvarPorDiaDaSemana(hora, novaFolha);
+		
 	}
 
-	private void salvarPorDiaDaSemana(LocalDateTime dia, Optional<FolhaPonto> folha) throws ParseException {
+	private void salvarPorDiaDaSemana(LocalDateTime dia, Optional<FolhaPonto> folha) {
 		TipoMarcacaoSemana diaDaSemana = dataService.retornaEnumDiaDaSemana(dia);
 		SalvarPonto salvarPonto = diaDaSemana.obter();
 		salvarPonto.salvar(folha.get(), dia, registroPontoService, folhaPontoService, folhaPontoRepository);

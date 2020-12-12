@@ -18,9 +18,6 @@ public class FolhaPontoService {
 	  @Autowired
 	  private FolhaPontoRepository folhaPontoRepository;
 	  
-	  @Autowired
-	  private DataService dataService;
-	  
 	  public Optional<FolhaPonto> retornarFolhaPontoDoUsuarioPorDia(Usuario usuario, LocalDateTime dia) {
 		  return folhaPontoRepository.findByUsuarioAndDia(usuario, dia);
 	  }

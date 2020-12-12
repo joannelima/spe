@@ -1,6 +1,7 @@
 package com.spe.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -35,8 +36,7 @@ public class FolhaPonto implements Serializable{
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy",locale = "pt-BR", timezone = "Brazil/East")
 	@DateTimeFormat(pattern = "dd/MM/yyyy") 
-	@Temporal(TemporalType.DATE)
-	private Date dia;
+	private LocalDateTime dia;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="HH:mm",locale = "pt-BR", timezone = "Brazil/East")
 	@DateTimeFormat(pattern = "HH:mm")
@@ -62,7 +62,7 @@ public class FolhaPonto implements Serializable{
 	@OneToMany(mappedBy = "folhaPonto", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<RegistroPonto> pontos;
 
-	public FolhaPonto(Date date, Usuario usuario) {
+	public FolhaPonto(LocalDateTime date, Usuario usuario) {
 		super();
 		this.dia = date;
 		this.usuario = usuario;

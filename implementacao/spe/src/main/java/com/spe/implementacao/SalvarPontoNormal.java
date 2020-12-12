@@ -1,6 +1,5 @@
 package com.spe.implementacao;
 
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
@@ -16,18 +15,14 @@ import com.spe.service.RegistroPontoService;
 public class SalvarPontoNormal implements SalvarPonto {
 
 	@Override
-	public void salvar(FolhaPonto folhaPonto, LocalDateTime dia, RegistroPontoService pontoService, FolhaPontoService folhaService, FolhaPontoRepository folhaRepository) throws ParseException {
+	public void salvar(FolhaPonto folhaPonto, LocalDateTime dia, RegistroPontoService pontoService, FolhaPontoService folhaService, FolhaPontoRepository folhaRepository) {
 			Long qtdPontos = pontoService.retornaQuantidadePontos(folhaPonto);
 			HashMap<Long, AcaoFolhaPonto<FolhaDto, FolhaPontoRepository>> acao = new HashMap<>();
-			//acao.put(4L, new FinalizarFolhaPonto());
 			if(acao.containsKey(qtdPontos)) {
 			//	acao.get(qtdPontos).acao(folhaDto, folhaRepository);
-			}else {
-				pontoService.salvarRegistroPonto(dia, folhaPonto, TipoMarcacaoSemana.Normal);
 			}
-
-
-		
+			
+			pontoService.salvarRegistroPonto(dia, folhaPonto, TipoMarcacaoSemana.Normal);
 	}
 
 }
