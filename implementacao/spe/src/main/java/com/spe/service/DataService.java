@@ -1,6 +1,5 @@
 package com.spe.service;
 
-import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -10,9 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.spe.dto.FolhaDto;
 import com.spe.enumeration.TipoMarcacaoSemana;
-import com.spe.implementacao.RetornaHoraDebito;
-import com.spe.implementacao.RetornaHoraExtra;
-import com.spe.interfaces.RetornaHora;
 import com.spe.model.FolhaPonto;
 
 @Service
@@ -37,33 +33,4 @@ public class DataService {
 	}
 
 
-	public Date calculoHoraDebito(Integer horasPorDia, int horaRestante, int minutoRestante)
-			throws ParseException {
-		RetornaHora calculoHoraDebito = new RetornaHoraDebito();
-		Date horaDebito = calculoHoraDebito.calcular(horaRestante, minutoRestante, horasPorDia);
-		return horaDebito;
-	}
-
-
-	public Date calculoHoraExtra(Integer horasPorDia, int horaRestante, int minutoRestante)
-			throws ParseException {
-		RetornaHora calculoHoraExtra = new RetornaHoraExtra();
-		Date horaExtra = calculoHoraExtra.calcular(horaRestante, minutoRestante, horasPorDia);
-		return horaExtra;
-	}
-
-
-	public Date retornaExtraOuDebito (Integer horasPorDia, Integer horaRestante, Integer minutoRestante) throws ParseException{
-		if(horaRestante > horasPorDia) {
-			Date horaExtra = calculoHoraExtra(horasPorDia, horaRestante, minutoRestante);
-			return horaExtra;
-		}else if(horaRestante < horasPorDia){
-			Date horaDebito = calculoHoraDebito(horasPorDia, horaRestante, minutoRestante);
-			return horaDebito;
-		}
-		
-		return null;
-	}
-
-	
 }
