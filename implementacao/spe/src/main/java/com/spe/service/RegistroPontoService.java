@@ -7,25 +7,21 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.AllArgsConstructor;
+
 import com.spe.enumeration.TipoMarcacaoSemana;
 import com.spe.interfaces.SalvarPonto;
+import com.spe.mapper.RegistroPontoMapper;
 import com.spe.model.FolhaPonto;
 import com.spe.model.RegistroPonto;
 import com.spe.model.Usuario;
-import com.spe.repository.FolhaPontoRepository;
-import com.spe.repository.RegistroPontoRepository;
 
 @Service
+@AllArgsConstructor
 public class RegistroPontoService {
 
 	@Autowired
-	private RegistroPontoRepository registroPontoRepository;
-	
-	@Autowired
 	private FolhaPontoService folhaPontoService;
-	
-	@Autowired
-	private FolhaPontoRepository folhaPontoRepository;
 	
 	@Autowired
 	private DataService dataService;
@@ -33,6 +29,7 @@ public class RegistroPontoService {
 	@Autowired
 	private RegistroPontoService registroPontoService;
 	
+	private RegistroPontoMapper registroPontoMapper;
 	
 	public void baterPonto(Usuario usuario) {
 		LocalDateTime hora = LocalDateTime.now();
@@ -53,8 +50,12 @@ public class RegistroPontoService {
 	}
 	
 	public void salvarRegistroPonto(LocalDateTime hora, FolhaPonto folha, TipoMarcacaoSemana tpm) {
-		RegistroPonto ponto = new RegistroPonto(hora, folha, tpm); 
-		registroPontoRepository.save(ponto);
+		RegistroPonto ponto =  RegistroPonto.builder().
+									tipoMarcacaoSemana(tpm).
+									folhaPonto(folha).
+									horasMarcacao(hora).build(); 
+		registroPontoMapper.inserirNovo(ponto);
+		
 	}
 	
 	public Long retornaQuantidadePontos(FolhaPonto folha) {

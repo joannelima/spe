@@ -17,10 +17,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.spe.enumeration.TipoMarcacaoSemana;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class RegistroPonto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -39,15 +45,5 @@ public class RegistroPonto implements Serializable{
 	
 	@Enumerated(EnumType.STRING)
 	private TipoMarcacaoSemana tipoMarcacaoSemana;
-
-	public RegistroPonto() {}
-
-	public RegistroPonto(LocalDateTime horasMarcacao, FolhaPonto folhaPonto, TipoMarcacaoSemana tipoMarcacaoSemana) {
-		super();
-		this.horasMarcacao = horasMarcacao;
-		this.folhaPonto = folhaPonto;
-		this.tipoMarcacaoSemana = tipoMarcacaoSemana;
-	}
-	
 	
 }
