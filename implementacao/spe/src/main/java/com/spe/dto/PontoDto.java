@@ -6,5 +6,6 @@ import lombok.Data;
 public class PontoDto {
 
 	private String cpf;
+	private String Obs;
 	
 }
